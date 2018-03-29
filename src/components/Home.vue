@@ -1,29 +1,43 @@
 <template>
   <Page class="page">
-    <ActionBar title="RadSideDrawer"></ActionBar>
-    <RadSideDrawer ref="drawer"  drawerTransition="PushTransition">
-
-      <StackLayout ~mainContent>
-        <Label :text="mainContentText" textWrap="true" fontSize="13" padding="10" />
+    <ActionBar class="action-bar" title="Miyha">
+      <NavigationButton text="Menu" icon="res://ic_list_black_24dp" @tap="toggleDrawer" />
+      <StackLayout orientation="horizontal">
+        <Image src="res://icon" width="40" height="40" verticalAlignment="center" />
+        <Label text="iyha" fontSize="24" verticalAlignment="center" />
       </StackLayout>
-    </RadSideDrawer>
+    </ActionBar>
+    <SideDrawer>
+      <StackLayout>
+        <flash-message autoHide variant="success"></flash-message>
+        <Label text="Hello world !" />
+        <Label textWrap="true">
+          <FormattedString>
+            <Span text="Welcome " />
+            <Span :text="user.firstname" />
+          </FormattedString>
+        </Label>
+        <Label :text="resultToShow" />
+        <Button text="available" @tap="isAvailable" />
+        <Button text="request auth" @tap="requestAuth" />
+        <Button text="query steps" @tap="queryData" />
+        <ListView for="item in responseData">
+          <v-template>
+            <Label :text="item.value" />
+          </v-template>
+        </ListView>
+      </StackLayout>
+    </SideDrawer>
+
   </Page>
 </template>
 
 <script>
     export default {
-        data () {
-            return {
-                mainContentText: "SideDrawer for NativeScript can be easily setup in the XML definition of your page by defining main- and drawer-content. The component"
-                + " has a default transition and position and also exposes notifications related to changes in its state. Swipe from left to open side drawer.",
-
-            };
-        },
-    };
+        methods: {
+            toggleDrawer() {
+                this.$store.commit('TOGGLE_DRAWER')
+            }
+        }
+    }
 </script>
-
-<style scoped>
-  Label {
-    color: red;
-  }
-</style>
